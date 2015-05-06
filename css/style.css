@@ -1,0 +1,45 @@
+body {
+    text-align: center;
+}
+
+.headings{
+  text-align: center;
+  position: absolute;
+  left: 200px;
+  top:55px;
+  background-color: #000000;
+  color: red;
+}
+
+li{
+  text-decoration: none;
+  list-style-type: none;
+}
+
+#button{
+  text-decoration: none;
+  background: #ccccee;
+  padding: 10px;
+  color: #ffffff;
+  margin-top:15px;
+  display: none;
+}
+
+table{
+  border: 1px solid #ccc;
+  font-size: 17px;
+  border-collapse: collapse;
+  width: 200px;
+  border-radius: 12px;
+}
+ td{
+  border: 1px solid #ccc;
+  font-size: 17px;
+  text-align: left;
+  padding: 10px;
+  font-weight: bolder;
+}
+
+.scoreBoard{
+  font-weight: bolder;
+}

@@ -64,7 +64,7 @@ Enemy.prototype.restart = function(){
 }
 
 Enemy.prototype.diffrentPosition = function(){
-  var yPosition = Math.floor((Math.random() * 4 ) + 1)
+  var yPosition = Math.floor((Math.random() * 5 ) + 1)
    if(yPosition == 1){
       this.y = 300;
    }else if(yPosition == 2){
@@ -73,6 +73,8 @@ Enemy.prototype.diffrentPosition = function(){
       this.y = 140;
    }else if(yPosition == 4){
       this.y = 60;
+   }else if(yPosition == 5){
+      this.y = 380;
    }    
 };
 

@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body onload="myFunction();">
-
+<p id="demo"></p>
 <div class="headings">
   <p align="center" class="scoreBoard">Score Board</p>
   <table border="1">
@@ -18,9 +18,16 @@
     <td id="lifeSpan"></td>
     </tr>
     <tr>
-    <td>High Score</td>
-    <td id="lifeSpan"></td>
-    </tr>   
+    <td>High Scores</td>
+    </tr> 
+    <tr>
+      <td>Previous</td>
+      <td>Present</td>
+    </tr> 
+    <tr>
+      <td id="previous"></td>
+      <td id="Present"></td>
+    </tr>  
   </table>
   <p id="gameOver"></p>
   <a href="index.html" id="button">Retry?</a>

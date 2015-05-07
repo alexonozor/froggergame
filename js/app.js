@@ -1,9 +1,21 @@
 var a = new Audio("assets/die.mp3");
 var s = new Audio("assets/begin.mp3");
+var l = new Audio("assets/levels.mp3");
+
 
  function myFunction() {
     s.play();
 }
+
+var myVar=setInterval(function () {myTimer()}, 1000);
+var d = 30;
+function myTimer() {
+    d -=1;
+    document.getElementById("demo").innerHTML = d;
+}
+
+
+
 
 // Enemies our player must avoid
 var Enemy = function() {
@@ -14,7 +26,7 @@ var Enemy = function() {
     // a helper we've provided to easily load images
   this.x;
   this.y;
-  this.speed = Math.floor((Math.random() * 100) + 20);
+  this.speed = 80;
   this.sprite = 'images/enemy-bug.png';
 }
 
@@ -93,29 +105,60 @@ function Player(){
   this.sprite = 'images/char-boy.png';
   this.life = 5;
   this.level = 1;
+  this.higScore = 0;
   this.gameOver = false;
   document.getElementById("lifeSpan").innerHTML= this.life;
   document.getElementById("Level").innerHTML=this.level;
+  document.getElementById("previous").innerHTML = localStorage.getItem("higScore");
+  var  storedScore = localStorage.getItem("higScore");
   this.removelife = function(){
       this.life -=1;
       document.getElementById("lifeSpan").innerHTML= this.life;
       if(this.life == 0){
         gameOver = true;
-        this.life = 5;
       if(gameOver){
-         this.sprite = "";
+         this.sprite = "images/grass-block.png";
+         this.higScore = 0;
          document.getElementById("button").style.display="block";
          document.getElementById("gameOver").innerHTML="Game Over";
+         document.getElementById("previous").innerHTML = localStorage.getItem("higScore");
         }
       }
   }
+
+
+ if (this.life > 0 && this.gameOver == false){  
   this.addLevel = function(){
-    function myLevel(){
+    if (this.life > 0 && this.gameOver == false){
+      l.play();
       this.level += 1;
-      document.getElementById("Level").innerHTML=this.level;
-      console.log(this.level);
+      this.higScore +=5;
+      if(this.higScore >= localStorage.higScore || localStorage.length == 0){
+        if(this.higScore == localStorage.higScore){
+           
+        }
+      if (typeof(Storage) != "undefined") {
+       localStorage.setItem("higScore", this.higScore.toString());
+    // Retrieve
+    document.getElementById("previous").innerHTML = localStorage.getItem("higScore");
+       } else {
+    document.getElementById("previous").innerHTML = "Sorry, your browser does not support Web Storage...";
+      }
     }
-  }
+      document.getElementById("Level").innerHTML=this.level;
+      document.getElementById("Present").innerHTML=this.higScore;
+      }else{
+        document.getElementById("lifeSpan").innerHTML= 1;
+        document.getElementById("Level").innerHTML= 0;
+      }
+      // loop through the allEnemy array
+      for (var x in allEnemies) {
+        allEnemies[x].speed += 50;
+      }
+ } 
+} 
+
+ 
 
   this.restart = function(){
     this.x = 200;
@@ -128,7 +171,7 @@ function Player(){
       ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 
-setInterval(player.addLevel(this), 3000)
+
 
   
 this.handleInput = function(arg){  
@@ -162,6 +205,10 @@ if (arg == 'left') {
 
 
 var player = new Player();
+if(player.life > 0 || player.life != nil){
+ setInterval(function(){player.addLevel();}, 10000);
+ console.log("life");
+}
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {

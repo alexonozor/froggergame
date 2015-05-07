@@ -59,5 +59,9 @@ table{
   font-weight: bolder;
   left: 230px;
   top:320px;
-
+  display:  none;
+}
+.gameTile{
+  margin: 0px;
+  font-family: sans-serif;
 }

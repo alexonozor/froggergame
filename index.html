@@ -4,34 +4,40 @@
     <title>Effective JavaScript: Frogger</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body onload="myFunction();">
+<body id="body" onload="myFunction();">
 <p id="demo"></p>
+<div align="center"><h1 class="gameTile">STREET FROG!</h1></div>
+<p id="recoredAlert" style="display: none; color:green;" align="center">YES!!! You are the street king. NEW RECORD SET.</p>
 <div class="headings">
   <p align="center" class="scoreBoard">Score Board</p>
-  <table border="1">
-   <tr>
-    <td>Level</td>
-    <td id="Level"></td>
-   </tr>
-    <tr>
-    <td> Life</td>
-    <td id="lifeSpan"></td>
-    </tr>
-    <tr>
-    <td>High Scores</td>
-    </tr> 
-    <tr>
-      <td>Previous</td>
-      <td>Present</td>
-    </tr> 
-    <tr>
-      <td id="previous"></td>
-      <td id="Present"></td>
-    </tr>  
-  </table>
+<table border="1">
+ <tr>
+  <td>Level</td>
+  <td id="Level"></td>
+ </tr>
+  <tr>
+  <td> Life</td>
+  <td id="lifeSpan"></td>
+  </tr>
+  <tr>
+  <td>High Scores</td>
+  </tr> 
+  <tr>
+    <td>Previous</td>
+    <td>Present</td>
+  </tr> 
+  <tr>
+    <td id="previous"></td>
+    <td id="Present"></td>
+  </tr>  
+</table>
   <p id="gameOver"></p>
   <a href="index.html" id="button">Retry?</a>
 </div>
+
+<audio src="assets/back.mp3" autoplay loop>
+<p>Your browser does not support the audio element </p>
+</audio>
 
     <script src="js/resources.js"></script>
     <script src="js/app.js"></script>

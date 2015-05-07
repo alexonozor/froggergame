@@ -1,7 +1,18 @@
+
+/*
+********************************************
+AUTHUR: OBOGBARE ALEX
+********************************************
+ORGANISATION: ANDELA
+********************************************
+*/
+
+
 // Global varables
 var a = new Audio("assets/die.mp3");
 var s = new Audio("assets/begin.mp3");
 var l = new Audio("assets/levels.mp3");
+var w = new Audio("assets/water.mp3");
 var countDown = 10;
 var gameOver = false; //This will turn true if the user life has finish
 
@@ -10,17 +21,12 @@ var gameOver = false; //This will turn true if the user life has finish
     s.play();
 }
 // this function is going to be called when you stand on the hid out
-var myVar=setInterval(function () {myTimer()}, 1000);
+
+  
+
 // this is the timer function that is to be called to chech if the user hidding ,
 // if so, it will wait for the countdown to finish and end the game.
-function myTimer() {
-    countDown -=1;
-    document.getElementById("demo").innerHTML = countDown;
-    if(countDown == 0){
-      document.getElementById("demo").style.display="none";
-      gameOver = true;
-    }
-}
+
 
 
 
@@ -68,7 +74,7 @@ Enemy.prototype.diffrentPosition = function(){
    }else if(yPosition == 4){
       this.y = 60;
    }    
- };
+};
 
  
 // Draw the enemy on the screen, required method for game
@@ -76,6 +82,7 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     accident(this, player);
 }
+
 
 //This Enemy Class function, is been called on collition.
 function accident(enemy, player){
@@ -121,35 +128,55 @@ function Player(){
   document.getElementById("previous").innerHTML = localStorage.getItem("higScore");
   var  storedScore = localStorage.getItem("higScore");
 
+  if(this.y == 350){
+   var myVar=setInterval(function () {myTimer()}, 1000);
+   function myTimer() {
+    countDown -=1;
+    document.getElementById("demo").style.display="block";
+    document.getElementById("demo").innerHTML = countDown;
+    if(countDown == 0){
+      document.getElementById("demo").style.display="none";
+       
+    }
+}
+
+  }
   // this class Method will minus one life from the players five life
   // and if the life get to zero, it turns the gameOver variable to true
-  this.removelife = function(){
-      this.life -=1;
-      document.getElementById("lifeSpan").innerHTML= this.life;
-      if(this.life == 0){
-        gameOver = true;
-      if(gameOver == true){
-         this.sprite = "images/";
-         this.higScore = 0;
-         document.getElementById("button").style.display="block";
-         document.getElementById("gameOver").innerHTML="Game Over";
-         document.getElementById("previous").innerHTML = localStorage.getItem("higScore");
-        }
-      }
+this.removelife = function(){
+    this.life -=1;
+    document.getElementById("lifeSpan").innerHTML= this.life;
+  if(this.life == 0){
+    gameOver = true;
+  if(gameOver == true){
+    this.sprite = ""; // setting the player to an empty string makes it disappare
+    this.higScore = 0;
+    document.getElementById("button").style.display="block";
+    document.getElementById("gameOver").innerHTML="Game Over";
+    document.getElementById("previous").innerHTML = localStorage.getItem("higScore");
+    }
   }
+}
 
-
+// this the statement will only run of the layer has life or 
+// the game is still on.
 if(this.life > 0 && this.gameOver == false){  
   this.addLevel = function(){
     if (this.life > 0 && this.gameOver == false){
       l.play();
       this.level += 1;
       this.higScore +=5;
+// first if statement check if the player highscore is grater that 
+// the previous/stored one, and if that is true, it move one to the next
+//state ment
 if(this.higScore >= localStorage.higScore || localStorage.length == 0){
+  //this statement will check if the player has reach the stored highscore
+
   if(this.higScore == localStorage.higScore){
-           
+    document.getElementById("recoredAlert").style.display="block";
   }
-//This line 
+
+//Am using HTML5 Localstorage Api to store the highscore 
 if (typeof(Storage) != "undefined") {
   localStorage.setItem("higScore", this.higScore.toString());
 // Retrieve
@@ -165,25 +192,26 @@ if (typeof(Storage) != "undefined") {
   document.getElementById("Level").innerHTML= 0;
 }
    // loop through the allEnemy array
-  for (var x in allEnemies) {
-    allEnemies[x].speed += 50;
+for (var x in allEnemies) {
+   allEnemies[x].speed += 50;
   }
  } 
 } 
 
  
   // This class Method will restart the players position
-  this.restart = function(){
-    this.x = 200;
-    this.y = 350;
-   }
-   this.update =  function(){
+this.restart = function(){
+  this.x = 200;
+  this.y = 350;
+}
+
+this.update =  function(){
       
-   }
+}   
    // this class function will render the canvas of the player
    //Note: this is called from the engin.js file, just incase of any modification
-   this.render = function(){
-      ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+this.render = function(){
+  ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 
 
@@ -209,6 +237,8 @@ if (arg == 'left') {
        this.x = 201;
        this.y = 380;
        player.removelife();
+       w.play();
+       a.play()
      }
 } else if (arg == 'down') {
      // Add 80 to y coordinate after checking for the boundary

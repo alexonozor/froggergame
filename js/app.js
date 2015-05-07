@@ -1,17 +1,25 @@
+// Global varables
 var a = new Audio("assets/die.mp3");
 var s = new Audio("assets/begin.mp3");
 var l = new Audio("assets/levels.mp3");
+var countDown = 10;
+var gameOver = false; //This will turn true if the user life has finish
 
-
+ // This function make the first statement when the game start
  function myFunction() {
     s.play();
 }
-
+// this function is going to be called when you stand on the hid out
 var myVar=setInterval(function () {myTimer()}, 1000);
-var d = 30;
+// this is the timer function that is to be called to chech if the user hidding ,
+// if so, it will wait for the countdown to finish and end the game.
 function myTimer() {
-    d -=1;
-    document.getElementById("demo").innerHTML = d;
+    countDown -=1;
+    document.getElementById("demo").innerHTML = countDown;
+    if(countDown == 0){
+      document.getElementById("demo").style.display="none";
+      gameOver = true;
+    }
 }
 
 
@@ -69,6 +77,7 @@ Enemy.prototype.render = function() {
     accident(this, player);
 }
 
+//This Enemy Class function, is been called on collition.
 function accident(enemy, player){
   if(enemy.y == player.y){
     if((player.x <= enemy.x + 75) && (player.x >= enemy.x - 50) ){
@@ -111,13 +120,16 @@ function Player(){
   document.getElementById("Level").innerHTML=this.level;
   document.getElementById("previous").innerHTML = localStorage.getItem("higScore");
   var  storedScore = localStorage.getItem("higScore");
+
+  // this class Method will minus one life from the players five life
+  // and if the life get to zero, it turns the gameOver variable to true
   this.removelife = function(){
       this.life -=1;
       document.getElementById("lifeSpan").innerHTML= this.life;
       if(this.life == 0){
         gameOver = true;
-      if(gameOver){
-         this.sprite = "images/grass-block.png";
+      if(gameOver == true){
+         this.sprite = "images/";
          this.higScore = 0;
          document.getElementById("button").style.display="block";
          document.getElementById("gameOver").innerHTML="Game Over";
@@ -127,39 +139,40 @@ function Player(){
   }
 
 
- if (this.life > 0 && this.gameOver == false){  
+if(this.life > 0 && this.gameOver == false){  
   this.addLevel = function(){
     if (this.life > 0 && this.gameOver == false){
       l.play();
       this.level += 1;
       this.higScore +=5;
-      if(this.higScore >= localStorage.higScore || localStorage.length == 0){
-        if(this.higScore == localStorage.higScore){
+if(this.higScore >= localStorage.higScore || localStorage.length == 0){
+  if(this.higScore == localStorage.higScore){
            
-        }
-      if (typeof(Storage) != "undefined") {
-       localStorage.setItem("higScore", this.higScore.toString());
-    // Retrieve
-    document.getElementById("previous").innerHTML = localStorage.getItem("higScore");
-       } else {
-    document.getElementById("previous").innerHTML = "Sorry, your browser does not support Web Storage...";
-      }
-    }
-      document.getElementById("Level").innerHTML=this.level;
-      document.getElementById("Present").innerHTML=this.higScore;
-      }else{
-        document.getElementById("lifeSpan").innerHTML= 1;
-        document.getElementById("Level").innerHTML= 0;
-      }
-      // loop through the allEnemy array
-      for (var x in allEnemies) {
-        allEnemies[x].speed += 50;
-      }
+  }
+//This line 
+if (typeof(Storage) != "undefined") {
+  localStorage.setItem("higScore", this.higScore.toString());
+// Retrieve
+  document.getElementById("previous").innerHTML = localStorage.getItem("higScore");
+} else {
+  document.getElementById("previous").innerHTML = "Sorry, your browser does not support Web Storage...";
+ }
+}
+  document.getElementById("Level").innerHTML=this.level;
+  document.getElementById("Present").innerHTML=this.higScore;
+}else{
+  document.getElementById("lifeSpan").innerHTML= 1;
+  document.getElementById("Level").innerHTML= 0;
+}
+   // loop through the allEnemy array
+  for (var x in allEnemies) {
+    allEnemies[x].speed += 50;
+  }
  } 
 } 
 
  
-
+  // This class Method will restart the players position
   this.restart = function(){
     this.x = 200;
     this.y = 350;
@@ -167,13 +180,16 @@ function Player(){
    this.update =  function(){
       
    }
+   // this class function will render the canvas of the player
+   //Note: this is called from the engin.js file, just incase of any modification
    this.render = function(){
       ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 
 
 
-  
+// This function listen to the direction events  
+//if(gameOver == true){ 
 this.handleInput = function(arg){  
 if (arg == 'left') {
    // deduct 100 from x coordinate after checking for the boundary
@@ -202,22 +218,25 @@ if (arg == 'left') {
     }
      }
 };
-
-
+//}
+ // This is the point i instantiate a new player
 var player = new Player();
+
+//confirming when the player addLevel should be called on the bellow condition  
 if(player.life > 0 || player.life != nil){
  setInterval(function(){player.addLevel();}, 10000);
- console.log("life");
 }
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
-document.addEventListener('keyup', function(e) {
-    var allowedKeys = {
-        37: 'left',
-        38: 'up',
-        39: 'right',
-        40: 'down'
-    };
+if(player.life > 0 || player.life != nil){
+  document.addEventListener('keyup', function(e) {
+      var allowedKeys = {
+          37: 'left',
+          38: 'up',
+          39: 'right',
+          40: 'down'
+      };
 
-    player.handleInput(allowedKeys[e.keyCode]);
-});
+      player.handleInput(allowedKeys[e.keyCode]);
+  });
+}

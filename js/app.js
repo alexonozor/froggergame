@@ -40,7 +40,7 @@ var Enemy = function() {
     // a helper we've provided to easily load images
   this.x;
   this.y;
-  this.speed = 80;
+  this.speed = Math.floor((Math.random() * 80) +2);
   this.sprite = 'images/enemy-bug.png';
 }
 
@@ -116,8 +116,8 @@ for(x = 1; x <= 3; x++){
 
 // Place the player object in a variable called player
 function Player(){
-  this.x = 200;
-  this.y = 350;
+  this.x = 201;
+  this.y = 380;
   this.sprite = 'images/char-boy.png';
   this.life = 5;
   this.level = 1;

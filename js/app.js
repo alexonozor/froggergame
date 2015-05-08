@@ -5,14 +5,16 @@ AUTHUR: OBOGBARE ALEX
 ********************************************
 ORGANISATION: ANDELA
 ********************************************
+DATE: 07/06/2015
+********************************************
 */
 
 
 // Global varables
-var a = new Audio("assets/die.mp3");
-var s = new Audio("assets/begin.mp3");
-var l = new Audio("assets/levels.mp3");
-var w = new Audio("assets/water.mp3");
+var deadSound = new Audio("assets/die.mp3");
+var beginSound = new Audio("assets/begin.mp3");
+var levelSound = new Audio("assets/levels.mp3");
+var WaterSound = new Audio("assets/water.mp3");
 var countDown = 10;
 var gameOver = false; //This will turn true if the user life has finish
 
@@ -20,15 +22,6 @@ var gameOver = false; //This will turn true if the user life has finish
  function myFunction() {
     s.play();
 }
-// this function is going to be called when you stand on the hid out
-
-  
-
-// this is the timer function that is to be called to chech if the user hidding ,
-// if so, it will wait for the countdown to finish and end the game.
-
-
-
 
 
 // Enemies our player must avoid
@@ -65,7 +58,7 @@ Enemy.prototype.restart = function(){
 
 Enemy.prototype.diffrentPosition = function(){
   var yPosition = Math.floor((Math.random() * 5 ) + 1)
-   if(yPosition == 1){
+  if(yPosition == 1){
       this.y = 300;
    }else if(yPosition == 2){
       this.y = 220;
@@ -93,7 +86,7 @@ function accident(enemy, player){
       player.x = 201;
       player.y = 380;
       player.removelife();
-      a.play();
+      deadSound.play();
     }
   }
 }
@@ -130,19 +123,17 @@ function Player(){
   document.getElementById("previous").innerHTML = localStorage.getItem("higScore");
   var  storedScore = localStorage.getItem("higScore");
 
-  if(this.y == 350){
+if(this.y == 350){
    var myVar=setInterval(function () {myTimer()}, 1000);
-   function myTimer() {
+  function myTimer() {
     countDown -=1;
     document.getElementById("demo").style.display="block";
     document.getElementById("demo").innerHTML = countDown;
     if(countDown == 0){
-      document.getElementById("demo").style.display="none";
-       
+      document.getElementById("demo").style.display="none";  
     }
-}
-
   }
+}
   // this class Method will minus one life from the players five life
   // and if the life get to zero, it turns the gameOver variable to true
 this.removelife = function(){
@@ -165,37 +156,36 @@ this.removelife = function(){
 if(this.life > 0 && this.gameOver == false){  
   this.addLevel = function(){
     if (this.life > 0 && this.gameOver == false){
-      l.play();
+      levelSound.play();
       this.level += 1;
       this.higScore +=5;
 // first if statement check if the player highscore is grater that 
 // the previous/stored one, and if that is true, it move one to the next
 //state ment
-if(this.higScore >= localStorage.higScore || localStorage.length == 0){
+if(this.higScore >= localStorage.higScore || localStorage.length > 0){
   //this statement will check if the player has reach the stored highscore
-
   if(this.higScore == localStorage.higScore){
     document.getElementById("recoredAlert").style.display="block";
+    this.life += 5;
   }
-
 //Am using HTML5 Localstorage Api to store the highscore 
-if (typeof(Storage) != "undefined") {
-  localStorage.setItem("higScore", this.higScore.toString());
-// Retrieve
-  document.getElementById("previous").innerHTML = localStorage.getItem("higScore");
-} else {
-  document.getElementById("previous").innerHTML = "Sorry, your browser does not support Web Storage...";
- }
-}
+  if (typeof(Storage) != "undefined") {
+    localStorage.setItem("higScore", this.higScore.toString());
+ // Retrieve
+    document.getElementById("previous").innerHTML = localStorage.getItem("higScore");
+   } else {
+    document.getElementById("previous").innerHTML = "Sorry, your browser does not support Web Storage...";
+   }
+  }
   document.getElementById("Level").innerHTML=this.level;
-  document.getElementById("Present").innerHTML=this.higScore;
-}else{
+  document.getElementById("Present").innerHTML=this.higScore;   
+ }else{
   document.getElementById("lifeSpan").innerHTML= 1;
   document.getElementById("Level").innerHTML= 0;
-}
+ }
    // loop through the allEnemy array
-for (var x in allEnemies) {
-   allEnemies[x].speed += 50;
+  for (var x in allEnemies) {
+     allEnemies[x].speed += 50;
   }
  } 
 } 
@@ -239,16 +229,16 @@ if (arg == 'left') {
        this.x = 201;
        this.y = 380;
        player.removelife();
-       w.play();
-       a.play()
-     }
+       WaterSound.play();
+       deadSound.play()
+    }
 } else if (arg == 'down') {
      // Add 80 to y coordinate after checking for the boundary
      if (this.y + 80 <= 380) {
        this.y = this.y + 80;
      }
     }
-     }
+  }
 };
 //}
  // This is the point i instantiate a new player

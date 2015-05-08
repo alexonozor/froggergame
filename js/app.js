@@ -5,7 +5,7 @@ AUTHUR: OBOGBARE ALEX
 ********************************************
 ORGANISATION: ANDELA
 ********************************************
-DATE: 07/06/2015
+DATE: 07/05/2015
 ********************************************
 */
 
@@ -20,8 +20,17 @@ var gameOver = false; //This will turn true if the user life has finish
 
  // This function make the first statement when the game start
  function myFunction() {
-    beginSound.play();
+    s.play();
 }
+// this function is going to be called when you stand on the hid out
+
+  
+
+// this is the timer function that is to be called to chech if the user hidding ,
+// if so, it will wait for the countdown to finish and end the game.
+
+
+
 
 
 // Enemies our player must avoid
@@ -74,8 +83,8 @@ Enemy.prototype.diffrentPosition = function(){
  
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
-  ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-  accident(this, player);
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    accident(this, player);
 }
 
 
@@ -101,7 +110,6 @@ function accident(enemy, player){
 
 
 var allEnemies = [];
-
 for(x = 1; x <= 3; x++){
  var enemy = new Enemy();
   enemy.restart();
@@ -131,7 +139,7 @@ if(this.y == 350){
     document.getElementById("demo").style.display="block";
     document.getElementById("demo").innerHTML = countDown;
     if(countDown == 0){
-    document.getElementById("demo").style.display="none";  
+      document.getElementById("demo").style.display="none";  
     }
   }
 }
@@ -156,39 +164,37 @@ this.removelife = function(){
 // the game is still on.
 if(this.life > 0 && this.gameOver == false){  
   this.addLevel = function(){
-  if (this.life > 0 && this.gameOver == false){
-  levelSound.play();
-  this.level += 1;
-  this.higScore +=5;
+    if (this.life > 0 && this.gameOver == false){
+      levelSound.play();
+      this.level += 1;
+      this.higScore +=5;
 // first if statement check if the player highscore is grater that 
 // the previous/stored one, and if that is true, it move one to the next
 //state ment
-if(this.higScore >= localStorage.higScore || localStorage.length > 0){
+if(this.higScore >= localStorage.higScore || localStorage.length == 0){
   //this statement will check if the player has reach the stored highscore
-if(this.higScore == localStorage.higScore){
- document.getElementById("recoredAlert").style.display="block";
-  this.life += 5;
-}
-
-//Am using HTML5 Localstorage Api to store the highscore 
-if (typeof(Storage) != "undefined") {
-  localStorage.setItem("higScore", this.higScore.toString());
-  // Retrieve
-  document.getElementById("previous").innerHTML = localStorage.getItem("higScore");
-} else {
-  document.getElementById("previous").innerHTML = "Sorry, your browser does not support Web Storage...";
+  if(this.higScore == localStorage.higScore){
+    document.getElementById("recoredAlert").style.display="block";
+    this.life += 5;
   }
-}
- document.getElementById("Level").innerHTML=this.level;
- document.getElementById("Present").innerHTML=this.higScore;   
-}else{
- document.getElementById("lifeSpan").innerHTML= 1;
- document.getElementById("Level").innerHTML= 0;
-}
-
+//Am using HTML5 Localstorage Api to store the highscore 
+  if (typeof(Storage) != "undefined") {
+    localStorage.setItem("higScore", this.higScore.toString());
+ // Retrieve
+    document.getElementById("previous").innerHTML = localStorage.getItem("higScore");
+   } else {
+    document.getElementById("previous").innerHTML = "Sorry, your browser does not support Web Storage...";
+   }
+  }
+  document.getElementById("Level").innerHTML=this.level;
+  document.getElementById("Present").innerHTML=this.higScore;   
+ }else{
+  document.getElementById("lifeSpan").innerHTML= 1;
+  document.getElementById("Level").innerHTML= 0;
+ }
    // loop through the allEnemy array
   for (var x in allEnemies) {
-    allEnemies[x].speed += 50;
+     allEnemies[x].speed += 50;
   }
  } 
 } 

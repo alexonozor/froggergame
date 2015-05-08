@@ -74,8 +74,8 @@ Enemy.prototype.diffrentPosition = function(){
  
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-    accident(this, player);
+  ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+  accident(this, player);
 }
 
 
@@ -101,6 +101,7 @@ function accident(enemy, player){
 
 
 var allEnemies = [];
+
 for(x = 1; x <= 3; x++){
  var enemy = new Enemy();
   enemy.restart();
@@ -130,7 +131,7 @@ if(this.y == 350){
     document.getElementById("demo").style.display="block";
     document.getElementById("demo").innerHTML = countDown;
     if(countDown == 0){
-      document.getElementById("demo").style.display="none";  
+    document.getElementById("demo").style.display="none";  
     }
   }
 }
@@ -155,10 +156,10 @@ this.removelife = function(){
 // the game is still on.
 if(this.life > 0 && this.gameOver == false){  
   this.addLevel = function(){
-    if (this.life > 0 && this.gameOver == false){
-      levelSound.play();
-      this.level += 1;
-      this.higScore +=5;
+  if (this.life > 0 && this.gameOver == false){
+  levelSound.play();
+  this.level += 1;
+  this.higScore +=5;
 // first if statement check if the player highscore is grater that 
 // the previous/stored one, and if that is true, it move one to the next
 //state ment

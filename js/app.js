@@ -165,28 +165,30 @@ if(this.life > 0 && this.gameOver == false){
 //state ment
 if(this.higScore >= localStorage.higScore || localStorage.length > 0){
   //this statement will check if the player has reach the stored highscore
-  if(this.higScore == localStorage.higScore){
-    document.getElementById("recoredAlert").style.display="block";
-    this.life += 5;
-  }
+if(this.higScore == localStorage.higScore){
+ document.getElementById("recoredAlert").style.display="block";
+  this.life += 5;
+}
+
 //Am using HTML5 Localstorage Api to store the highscore 
-  if (typeof(Storage) != "undefined") {
-    localStorage.setItem("higScore", this.higScore.toString());
- // Retrieve
-    document.getElementById("previous").innerHTML = localStorage.getItem("higScore");
-   } else {
-    document.getElementById("previous").innerHTML = "Sorry, your browser does not support Web Storage...";
-   }
+if (typeof(Storage) != "undefined") {
+  localStorage.setItem("higScore", this.higScore.toString());
+  // Retrieve
+  document.getElementById("previous").innerHTML = localStorage.getItem("higScore");
+} else {
+  document.getElementById("previous").innerHTML = "Sorry, your browser does not support Web Storage...";
   }
-  document.getElementById("Level").innerHTML=this.level;
-  document.getElementById("Present").innerHTML=this.higScore;   
- }else{
-  document.getElementById("lifeSpan").innerHTML= 1;
-  document.getElementById("Level").innerHTML= 0;
- }
+}
+ document.getElementById("Level").innerHTML=this.level;
+ document.getElementById("Present").innerHTML=this.higScore;   
+}else{
+ document.getElementById("lifeSpan").innerHTML= 1;
+ document.getElementById("Level").innerHTML= 0;
+}
+
    // loop through the allEnemy array
   for (var x in allEnemies) {
-     allEnemies[x].speed += 50;
+    allEnemies[x].speed += 50;
   }
  } 
 } 

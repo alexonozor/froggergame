@@ -20,7 +20,7 @@ var gameOver = false; //This will turn true if the user life has finish
 
  // This function make the first statement when the game start
  function myFunction() {
-    s.play();
+    beginSound.play();
 }
 
 
